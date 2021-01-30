@@ -1,0 +1,69 @@
+{
+  "lists": [
+    {
+      "id": 2,
+      "name": "Фильмы",
+      "colorId": 3
+    },
+    {
+      "id": 3,
+      "name": "Книги",
+      "colorId": 2
+    },
+    {
+      "name": "Продукты",
+      "colorId": 6,
+      "id": 4
+    }
+  ],
+  "tasks": [
+    {
+      "id": 1,
+      "listId": 3,
+      "text": "Властелин колец",
+      "completed": true
+    }
+  ],
+  "colors": [
+    {
+      "id": 1,
+      "hex": "#64C4ED",
+      "name": "blue"
+    },
+    {
+      "id": 2,
+      "hex": "#42B883",
+      "name": "green"
+    },
+    {
+      "id": 3,
+      "hex": "#B6E6BD",
+      "name": "lime"
+    },
+    {
+      "id": 4,
+      "hex": "#C355F5",
+      "name": "purple"
+    },
+    {
+      "id": 5,
+      "hex": "#FF6464",
+      "name": "red"
+    },
+    {
+      "id": 6,
+      "hex": "#FFBBCC",
+      "name": "pink"
+    },
+    {
+      "id": 7,
+      "hex": "#110133",
+      "name": "black"
+    },
+    {
+      "id": 8,
+      "hex": "#C9D1D3",
+      "name": "grey"
+    }
+  ]
+}
