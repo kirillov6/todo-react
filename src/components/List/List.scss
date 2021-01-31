@@ -24,6 +24,7 @@
 
     &:hover #{$self}__remove-btn {
       opacity: 0.2;
+      transition: opacity 0.15s ease-in-out;
     }
   
     .badge {
@@ -38,6 +39,11 @@
 
     span {
       flex: 1;
+
+      // Многоточие если не влезает
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
   }
 }

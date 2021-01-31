@@ -13,8 +13,8 @@ const AddList = ({ colors, onAdd }) => {
 
   const [showedPopup, showPopup] = useState(false);
   const [selectedColor, selectColor] = useState();
-  const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (Array.isArray(colors)) {
@@ -46,6 +46,9 @@ const AddList = ({ colors, onAdd }) => {
         const listObj = { ...data, color: { name: color }};
         onAdd(listObj);
         resetPopup();
+      })
+      .catch(() => {
+        alert("Ошибка при добавлении списка!")
       })
       .finally(() => {
         setIsLoading(false);

@@ -1,0 +1,37 @@
+.form {
+  &-new {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    opacity: 0.4;
+    transition: opacity 0.15s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    img {
+      width: 16px;
+      height: 16px;
+      margin-left: 4px;
+    }
+
+    span {
+      font-size: 16px;
+      margin-left: 20px;
+    }
+  }
+
+  &-edit {
+    .button {
+      margin-right: 10px;
+      margin-top: 15px;
+    }
+
+    textarea {
+      resize: none;
+      margin-top: 15px;
+    }
+  }
+}

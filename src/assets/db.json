@@ -2,7 +2,7 @@
   "lists": [
     {
       "id": 2,
-      "name": "Фильмы",
+      "name": "Покупки",
       "colorId": 3
     },
     {
@@ -11,7 +11,7 @@
       "colorId": 2
     },
     {
-      "name": "Продукты",
+      "name": "Фильмы",
       "colorId": 6,
       "id": 4
     }
@@ -20,8 +20,16 @@
     {
       "id": 1,
       "listId": 3,
-      "text": "Властелин колец",
+      "title": "Властелин колец",
+      "task": "Посмотреть 1 и 2 часть",
       "completed": true
+    },
+    {
+      "listId": 2,
+      "title": "sd",
+      "text": "aaaaaaa",
+      "completed": false,
+      "id": 2
     }
   ],
   "colors": [

@@ -8,13 +8,9 @@ import listIcon from './assets/icons/list.svg';
 
 function App() {
 
-  // DB.lists.map(item => {
-  //   item.color = DB.colors.find(color => color.id === item.colorId).name;
-  //   return item;
-  // })
-
   const [lists, setLists] = useState(null);
   const [colors, setColors] = useState(null);
+  const [activeItem, setActiveItem] = useState(null);
 
   useEffect(() => {
     axios.get("http://localhost:3001/lists?_expand=color&_embed=tasks").then(({ data }) => {
@@ -30,8 +26,28 @@ function App() {
     setLists(newLists);
   }
 
+  const onAddTask = (task) => {
+    const newLists = lists.map((item) => {
+      if (item.id === task.listId) {
+        item.tasks = [...item.tasks, task];
+      }
+      return item;
+    });
+    setLists(newLists)
+  }
+
   const onRemoveList = (id) => {
     const newLists = lists.filter(item => item.id !== id);
+    setLists(newLists);
+  }
+
+  const onEditListTitle = (id, title) => {
+    const newLists = lists.map((item) => {
+      if (item.id === id) {
+        item.name = title;
+      }
+      return item;
+    });
     setLists(newLists);
   }
 
@@ -53,6 +69,10 @@ function App() {
             items={lists}
             onRemove={onRemoveList}
             isRemovable
+            onClick={item => {
+              setActiveItem(item);
+            }}
+            activeItem={activeItem}
           />
         ) : (
           "Загрузка..."
@@ -65,9 +85,11 @@ function App() {
       </div>
 
       <div className="todo__tasks">
-        { lists &&
+        { lists && activeItem &&
           <Tasks
-            list={lists[1]}
+            list={activeItem}
+            onEditTitle={onEditListTitle}
+            onAddTask={onAddTask}
           />
         }
       </div>

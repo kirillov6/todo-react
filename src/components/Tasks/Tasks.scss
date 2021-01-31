@@ -8,14 +8,15 @@
     border-bottom: 1px solid #dbdbdb;
 
     &:hover {
-      img {
+      .tasks__title__edit-btn {
         opacity: 0.2;
       }
     }
   }
 
-  img {
+  .tasks__title__edit-btn {
     opacity: 0;
+    transition: opacity 0.15s ease-in-out;
     cursor: pointer;
     margin-left: 15px;
 
@@ -27,13 +28,24 @@
   &__list {
     margin-top: 30px;
 
+    h3 {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 24px;
+      color: #C9D1D3;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+    }
+
     &__element {
       display: flex;
       align-items: center;
       margin-bottom: 15px;
 
-      input {
+      p {
         margin-left: 15px;
+        font-size: 16px;
       }
 
       .checkbox {
