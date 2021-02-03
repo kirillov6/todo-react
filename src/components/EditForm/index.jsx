@@ -34,8 +34,8 @@ const EditForm = ({ list, onAddTask }) => {
         onAddTask(data);
         toggleFormMode();
       })
-      .catch(() => {
-        alert("Ошибка при добавлении задачи!")
+      .catch((e) => {
+        alert("Ошибка при добавлении задачи: " + e.message)
       })
       .finally(() => {
         setIsLoading(false);

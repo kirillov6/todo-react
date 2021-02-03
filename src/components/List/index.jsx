@@ -36,7 +36,7 @@ const List = ({ items, isRemovable, onClick, onRemove, activeItem }) => {
 
             <span>
               {item.name}
-              {item.tasks && ` (${item.tasks.length})`}
+              {isRemovable && ` (${item.tasks ? item.tasks.length : 0})`}
             </span>
               
             { isRemovable &&

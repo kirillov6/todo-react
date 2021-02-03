@@ -22,14 +22,14 @@ function App() {
   }, []);
 
   const onAddList = (list) => {
-    const newLists = [...lists, list];
+    const newLists = Array.isArray(lists) && lists.length ? [...lists, list] : [list];
     setLists(newLists);
   }
 
   const onAddTask = (task) => {
     const newLists = lists.map((item) => {
       if (item.id === task.listId) {
-        item.tasks = [...item.tasks, task];
+        item.tasks = Array.isArray(item.tasks) && item.tasks.length ? [...item.tasks, task] : [task];
       }
       return item;
     });
