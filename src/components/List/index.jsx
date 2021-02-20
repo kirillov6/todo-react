@@ -8,7 +8,7 @@ import './List.scss';
 
 import removeIcon from '../../assets/icons/remove.svg';
 
-const List = ({ items, isRemovable, onClick, onRemove, activeItem }) => {
+const List = ({ items, isRemovable, onClick, onRemove, activeItem, isLockedClicks }) => {
 
   const removeListConfirm = (item) => {
     if (window.confirm("Вы действительно хотите удалить список?")) {
@@ -25,11 +25,11 @@ const List = ({ items, isRemovable, onClick, onRemove, activeItem }) => {
           <li 
             key={index} 
             className={classNames(item.className, { active: item.active ? item.active : activeItem && activeItem.id === item.id })}
-            onClick={onClick ? () => onClick(item) : null}
+            onClick={(!isLockedClicks && onClick) ? () => onClick(item) : null}
           >
             <i>
               {
-                item.icon ? <img src={ item.icon} alt={item.name} /> :
+                item.icon ? <img src={item.icon} alt={item.name} /> :
                 <Badge color={item.color.name}/>
               }
             </i>
@@ -39,12 +39,12 @@ const List = ({ items, isRemovable, onClick, onRemove, activeItem }) => {
               {isRemovable && ` (${item.tasks ? item.tasks.length : 0})`}
             </span>
               
-            { isRemovable &&
+            { isRemovable && !isLockedClicks &&
               <img
                 className="list__remove-btn"
                 src={removeIcon}
                 alt="Удалить элемент"
-                onClick={() => removeListConfirm(item)}
+                onClick={!isLockedClicks ? () => removeListConfirm(item) : null}
               />
             }
           </li>

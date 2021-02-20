@@ -13,8 +13,8 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 750px;
-  height: 500px;
+  width: calc(100vw - 300px);;
+  height: calc(100vh - 100px);
   transform: translate(-50%, -50%);
   font-size: 14px;
   box-shadow: 1px 2px 20px #f3f3f3;
@@ -29,11 +29,13 @@
     padding: 60px 20px;
     box-sizing: border-box;
     border-radius: 10px 0px 0px 10px;
+    transition: 0.5s filter linear;
   }
 
   &__tasks {
     flex: 1;
     padding: 60px;
+    overflow: auto;
   }
 }
 

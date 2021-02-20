@@ -9,7 +9,7 @@ import './AddList.scss';
 import addIcon from '../../assets/icons/add.svg';
 import closeIcon from '../../assets/icons/close.svg';
 
-const AddList = ({ colors, onAdd }) => {
+const AddList = ({ colors, onAdd, isLockedClicks }) => {
 
   const [showedPopup, showPopup] = useState(false);
   const [selectedColor, selectColor] = useState();
@@ -65,7 +65,7 @@ const AddList = ({ colors, onAdd }) => {
             className: "add-list__button"
           }
         ]}
-        onClick={() => showPopup(true)}
+        onClick={!isLockedClicks ? () => showPopup(true) : null}
       />
 
       { showedPopup && 

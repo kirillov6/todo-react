@@ -1,11 +1,6 @@
 {
   "lists": [
     {
-      "id": 2,
-      "name": "Покупки",
-      "colorId": 3
-    },
-    {
       "id": 3,
       "name": "Книги",
       "colorId": 2
@@ -14,6 +9,16 @@
       "name": "Фильмы",
       "colorId": 6,
       "id": 4
+    },
+    {
+      "name": "ssssssssssssssssa",
+      "colorId": 1,
+      "id": 5
+    },
+    {
+      "name": "ddd",
+      "colorId": 4,
+      "id": 6
     }
   ],
   "tasks": [
@@ -25,11 +30,11 @@
       "completed": true
     },
     {
-      "listId": 2,
-      "title": "sd",
-      "text": "aaaaaaa",
+      "listId": 3,
+      "title": "da",
+      "text": "s",
       "completed": false,
-      "id": 2
+      "id": 5
     }
   ],
   "colors": [

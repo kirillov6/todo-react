@@ -5,20 +5,23 @@ import './EditForm.scss';
 
 import addIcon from '../../assets/icons/add.svg';
 
-const EditForm = ({ list, onAddTask }) => {
+const EditForm = ({ list, onAddTask, editMode, changeEditMode }) => {
 
-  const [formMode, setFormMode] = useState(false);
   const [taskTitleValue, setTaskTitleValue] = useState('');
   const [taskTextValue, setTaskTextValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const toggleFormMode = () => {
-    setFormMode(!formMode);
+    changeEditMode();
     setTaskTitleValue('');
     setTaskTextValue('');
   }
 
   const addTask = () => {
+
+    if (!taskTitleValue)
+      return alert("Укажите заголовок задачи!");
+
     const task = {
       listId: list.id,
       title: taskTitleValue,
@@ -44,7 +47,7 @@ const EditForm = ({ list, onAddTask }) => {
 
   return (
     <div className="form">
-      { !formMode ? (
+      { !editMode ? (
         <div 
           className="form-new"
           onClick={toggleFormMode}
