@@ -14,11 +14,6 @@
       "name": "ssssssssssssssssa",
       "colorId": 1,
       "id": 5
-    },
-    {
-      "name": "ddd",
-      "colorId": 4,
-      "id": 6
     }
   ],
   "tasks": [
@@ -26,15 +21,22 @@
       "id": 1,
       "listId": 3,
       "title": "Властелин колец",
-      "task": "Посмотреть 1 и 2 часть",
+      "text": "Посмотреть 1 и 2 часть",
       "completed": true
     },
     {
       "listId": 3,
-      "title": "da",
-      "text": "s",
+      "title": "a",
+      "text": "asd",
       "completed": false,
-      "id": 5
+      "id": 3
+    },
+    {
+      "listId": 4,
+      "title": "Пересмотреть Побег из Шоушенка",
+      "text": "В пятницу вечером",
+      "completed": false,
+      "id": 4
     }
   ],
   "colors": [

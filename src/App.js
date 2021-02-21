@@ -11,7 +11,7 @@ function App() {
   const [lists, setLists] = useState(null);
   const [colors, setColors] = useState(null);
   const [activeItem, setActiveItem] = useState(null);
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState(0);
 
   let history = useHistory();
 
@@ -75,25 +75,56 @@ function App() {
     setLists(newLists);
   }
 
-  const changeEditMode = () => {
-    setEditMode(!editMode);
+  const onEditTask = (id, listId, newTitle, newText) => {
+    const newLists = lists.map((list) => {
+      if (list.id === listId) {
+        list.tasks = list.tasks.map((task) => {
+          if (task.id === id) {
+            task.title = newTitle;
+            task.text = newText;
+          }
+          return task;
+        });
+      }
+      return list;
+    });
+    setLists(newLists);
+  }
+
+  const changeEditMode = (mode) => {
+    setEditMode(mode);
+  }
+
+  const onCompleteTask = (listId, taskId, completed) => {
+    const newLists = lists.map((list) => {
+      if (list.id === listId) {
+        list.tasks = list.tasks.map((task) => {
+          if (task.id === taskId) {
+            task.completed = completed;
+          }
+          return task;
+        });
+      }
+      return list;
+    });
+    setLists(newLists);
   }
 
   return (
     <div className="todo">
-      <div className="todo__sidebar" style={editMode ? {filter: "blur(3px)"} : null}>
+      <div className="todo__sidebar" style={editMode > 0 ? {filter: "blur(3px)"} : null}>
         <List 
           items={[
             {
               icon: listIcon,
               name: "Все задачи",
-              active: !activeItem
+              active: history.location.pathname === '/'
             }
           ]}
           onClick={() => {
             history.push("/");
           }}
-          isLockedClicks={editMode}
+          isLockedClicks={editMode !== 0}
         />
 
         {lists ? (
@@ -101,7 +132,7 @@ function App() {
             items={lists}
             onRemove={onRemoveList}
             isRemovable
-            isLockedClicks={editMode}
+            isLockedClicks={editMode !== 0}
             onClick={item => {
               history.replace(`/lists/${item.id}`);
             }}
@@ -114,12 +145,12 @@ function App() {
         <AddList 
           colors={colors} 
           onAdd={onAddList}
-          isLockedClicks={editMode}
+          isLockedClicks={editMode !== 0}
         />
       </div>
 
       <div className="todo__tasks">
-      <Route exact path="/">
+        <Route exact path="/">
           { lists &&
             lists.map(list => (
               <Tasks
@@ -130,8 +161,9 @@ function App() {
                 changeEditMode={changeEditMode}
                 onEditTitle={onEditListTitle}
                 onAddTask={onAddTask}
-                //onEditTask={}
+                onEditTask={onEditTask}
                 onRemoveTask={onRemoveTask}
+                onCompleteTask={onCompleteTask}
               />
             ))
           }
@@ -144,8 +176,9 @@ function App() {
               changeEditMode={changeEditMode}
               onEditTitle={onEditListTitle}
               onAddTask={onAddTask}
-              //onEditTask={}
+              onEditTask={onEditTask}
               onRemoveTask={onRemoveTask}
+              onCompleteTask={onCompleteTask}
             />
           }
         </Route>

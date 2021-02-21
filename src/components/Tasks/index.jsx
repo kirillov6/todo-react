@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 import EditForm from '../EditForm'
@@ -8,7 +8,11 @@ import './Tasks.scss';
 
 import editIcon from '../../assets/icons/edit.svg';
 
-const Tasks = ({ list, hideEditForm, editMode, changeEditMode, onEditTitle, onAddTask, onEditTask, onRemoveTask }) => {
+const Tasks = ({ list, hideEditForm, editMode, changeEditMode, onEditTitle, onAddTask, onEditTask, onRemoveTask, onCompleteTask }) => {
+
+  const [activeTaskId, setActiveTaskId] = useState(-1);
+  const [activeTaskTitle, setActiveTaskTitle] = useState('');
+  const [activeTaskText, setActiveTaskText] = useState('');
 
   const editTitle = () => {
     const newTitle = window.prompt("Название списка", list.name);
@@ -20,11 +24,18 @@ const Tasks = ({ list, hideEditForm, editMode, changeEditMode, onEditTitle, onAd
     }
   }
 
+  const startEditTask = (task) => {
+    setActiveTaskId(task.id);
+    setActiveTaskTitle(task.title);
+    setActiveTaskText(task.text);
+    changeEditMode(2);
+  }
+
   return (
     <div className="tasks">
       <div className="tasks__title">
         <h2 style={{color: list.color.hex}}>{list.name}</h2>
-        { !editMode &&
+        { editMode === 0 &&
           <img
             src={editIcon}
             alt="Редактировать"
@@ -34,15 +45,17 @@ const Tasks = ({ list, hideEditForm, editMode, changeEditMode, onEditTitle, onAd
         }      
       </div>
 
-      { !editMode &&
+      { editMode === 0 &&
         <div className="tasks__list">
           { list.tasks && 
             list.tasks.map(task => (
               <Task 
                 key={task.id}
-                {...task}
-                onEdit={onEditTask}
+                task={task}
+                onEdit={startEditTask}
                 onRemove={() => onRemoveTask(list.id, task.id)}
+                onComplete={onCompleteTask}
+                hideEditForm={hideEditForm}
               />
           ))}
         </div>
@@ -51,8 +64,14 @@ const Tasks = ({ list, hideEditForm, editMode, changeEditMode, onEditTitle, onAd
       { !hideEditForm &&
         <EditForm
           key={list.id}
-          list={list}
+          listId={list.id}
+          taskId={activeTaskId}
           onAddTask={onAddTask}
+          onEditTask={() => onEditTask(activeTaskId, list.id, activeTaskTitle, activeTaskText)}
+          activeTaskTitle={activeTaskTitle}
+          activeTaskText={activeTaskText}
+          setActiveTaskTitle={setActiveTaskTitle}
+          setActiveTaskText={setActiveTaskText}
           editMode={editMode}
           changeEditMode={changeEditMode}
         />

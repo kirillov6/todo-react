@@ -5,27 +5,25 @@ import './EditForm.scss';
 
 import addIcon from '../../assets/icons/add.svg';
 
-const EditForm = ({ list, onAddTask, editMode, changeEditMode }) => {
+const EditForm = ({ listId, taskId, onAddTask, onEditTask, activeTaskTitle, activeTaskText, setActiveTaskTitle, setActiveTaskText, editMode, changeEditMode }) => {
 
-  const [taskTitleValue, setTaskTitleValue] = useState('');
-  const [taskTextValue, setTaskTextValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const toggleFormMode = () => {
-    changeEditMode();
-    setTaskTitleValue('');
-    setTaskTextValue('');
+  const toggleFormMode = (mode) => {
+    changeEditMode(mode);
+    setActiveTaskTitle('');
+    setActiveTaskText('');
   }
 
   const addTask = () => {
 
-    if (!taskTitleValue)
+    if (!activeTaskTitle)
       return alert("Укажите заголовок задачи!");
 
     const task = {
-      listId: list.id,
-      title: taskTitleValue,
-      text: taskTextValue,
+      listId: listId,
+      title: activeTaskTitle,
+      text: activeTaskText,
       completed: false
     };
 
@@ -35,7 +33,7 @@ const EditForm = ({ list, onAddTask, editMode, changeEditMode }) => {
       .post('http://localhost:3001/tasks', task)
       .then(({ data }) => {
         onAddTask(data);
-        toggleFormMode();
+        toggleFormMode(0);
       })
       .catch((e) => {
         alert("Ошибка при добавлении задачи: " + e.message)
@@ -45,12 +43,26 @@ const EditForm = ({ list, onAddTask, editMode, changeEditMode }) => {
       })
   }
 
+  const editTask = () => {
+
+    if (!activeTaskTitle)
+      return alert("Укажите заголовок задачи!");
+
+    onEditTask();
+    toggleFormMode(0);
+
+    axios.patch("http://localhost:3001/tasks/" + taskId, {
+      title: activeTaskTitle,
+      text: activeTaskText
+    });
+  }
+
   return (
     <div className="form">
-      { !editMode ? (
+      { (editMode === 0) ? (
         <div 
           className="form-new"
-          onClick={toggleFormMode}
+          onClick={() => toggleFormMode(1)}
         >
           <img 
               src={addIcon} 
@@ -63,29 +75,40 @@ const EditForm = ({ list, onAddTask, editMode, changeEditMode }) => {
             className="field"
             type="text"
             placeholder="Заголовок задачи"
-            value={taskTitleValue}
-            onChange={e => setTaskTitleValue(e.target.value)}
+            value={activeTaskTitle}
+            onChange={e => setActiveTaskTitle(e.target.value)}
           />
 
           <textarea
             className="field"
             rows="10"
             placeholder="Текст задачи"
-            value={taskTextValue}
-            onChange={e => setTaskTextValue(e.target.value)}
+            value={activeTaskText}
+            onChange={e => setActiveTaskText(e.target.value)}
           />
 
-          <button 
-            className="button"
-            onClick={addTask}
-            disabled={isLoading}
-          >
-            { isLoading ? "Добавление задачи..." : "Добавить задачу" }  
-          </button>
+          { editMode === 1 &&
+            <button 
+              className="button"
+              onClick={addTask}
+              disabled={isLoading}
+            >
+              { isLoading ? "Добавление задачи..." : "Добавить задачу" }  
+            </button>
+          }
+
+          { editMode === 2 &&
+            <button 
+              className="button"
+              onClick={editTask}
+            >
+              Сохранить изменения
+            </button>
+          }
 
           <button 
             className="button button--grey"
-            onClick={toggleFormMode}
+            onClick={() => toggleFormMode(0)}
           >
             Отмена
           </button>

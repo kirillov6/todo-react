@@ -6,6 +6,13 @@
   p {
     margin-left: 15px;
     font-size: 16px;
+
+    flex: 1;
+
+    // Многоточие если не влезает
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   &:hover &__actions {

@@ -42,8 +42,8 @@ const AddList = ({ colors, onAdd, isLockedClicks }) => {
         colorId: selectedColor
       })
       .then(({ data }) => {
-        const color = colors.find(clr => clr.id === selectedColor).name;
-        const listObj = { ...data, color: { name: color }};
+        const color = colors.find(clr => clr.id === selectedColor);
+        const listObj = { ...data, color: { name: color.name, hex: color.hex }};
         onAdd(listObj);
         resetPopup();
       })
